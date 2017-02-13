@@ -12,6 +12,8 @@ const rideSchema = new Schema({
   driverId: Schema.Types.ObjectId,
   rideBeginPlace: String,
   rideEndPlace: String,
+  rideBeginTime: Date,
+  rideEndTime: Date,
   rideBeginLat: Schema.Types.Double,
   rideBeginLong: Schema.Types.Double,
   rideEndLat: Schema.Types.Double,
@@ -20,8 +22,10 @@ const rideSchema = new Schema({
   estimatedArrival: Schema.Types.Double,
   actualDistance: Schema.Types.Double,
   actualArrival: Schema.Types.Double,
+  staticMapURL: String,
   rideTerminated: Boolean,
   pricePaid: Boolean,
+  cabFare: Schema.Types.Long,
   cashedAmount: Schema.Types.Long,
   rideRating: Number,
   rideActions: [{
@@ -29,6 +33,12 @@ const rideSchema = new Schema({
     issuedBy: Schema.Types.ObjectId,
     rideStatus: String,
     timestamp: {type: Date, default: Date.now}
+  }],
+  callDispatching: [{
+    driverId : Schema.Types.ObjectId,
+    first: Boolean,
+    response: String,
+    responseTime: Date
   }]
 }, {collection: 'rides', versionKey: false, shardKey: { _id: true } });
 
