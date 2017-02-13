@@ -6,7 +6,7 @@ const
   require('mongoose-long')(mongoose);
 
 const driverLocationSchema = new Schema({
-  driverID: Schema.Types.ObjectId,
+  driverId: Schema.Types.ObjectId,
   latitude: Schema.Types.Long,
   longtitude: Schema.Types.Long,
   timeStamp: {type: Date, default: Date.now}

@@ -5,8 +5,8 @@ const
   Schema = mongoose.Schema;
 
 const clientSchema = new Schema({
-  clientID: Schema.Types.ObjectId,
-  deviceID: String,
+  clientId: Schema.Types.ObjectId,
+  deviceId: String,
   phoneNumber: {type: String, required: true},
   token: String
 }, {collection: 'clients', versionKey: false, shardKey: { _id: true } });

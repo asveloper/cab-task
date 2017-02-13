@@ -6,7 +6,7 @@ const
   require('mongoose-long')(mongoose);
 
 const clientLocationSchema = new Schema({
-  clientID: Schema.Types.ObjectId,
+  clientId: Schema.Types.ObjectId,
   latitude: Schema.Types.Long,
   longtitude: Schema.Types.Long,
   timeStamp: {type: Date, default: Date.now}

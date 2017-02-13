@@ -5,8 +5,8 @@ const
   Schema = mongoose.Schema;
 
 const driverSchema = new Schema({
-  driverID: Schema.Types.ObjectId,
-  deviceID: String,
+  driverId: Schema.Types.ObjectId,
+  deviceId: String,
   phoneNumber: String,
   token: String,
   driverStatus: String,
