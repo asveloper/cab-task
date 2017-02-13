@@ -8,7 +8,7 @@ const
 const driverLocationSchema = new Schema({
   driverId: Schema.Types.ObjectId,
   latitude: Schema.Types.Long,
-  longtitude: Schema.Types.Long,
+  longitude: Schema.Types.Long,
   timeStamp: {type: Date, default: Date.now}
 }, {collection: 'driver_locations', versionKey: false, shardKey: { _id: true } });
 

@@ -17,7 +17,7 @@ const rideSchema = new Schema({
   rideBeginLat: Schema.Types.Double,
   rideBeginLong: Schema.Types.Double,
   rideEndLat: Schema.Types.Double,
-  rideEndLong: Schema.Types.Double,
+  rideEndLng: Schema.Types.Double,
   estimatedDistance: Schema.Types.Double,
   estimatedArrival: Schema.Types.Double, // estimated arrival time in minutes
   actualDistance: Schema.Types.Double, //realised route’s length in kilometers
