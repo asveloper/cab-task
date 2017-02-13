@@ -5,6 +5,7 @@ const
   Schema = mongoose.Schema,
   require('mongoose-long')(mongoose);
 
+// Collected GPS tracking data during the ride
 const rideTrackingSchema = new Schema({
   driverId: Schema.Types.ObjectId,
   latitude: Schema.Types.Long,

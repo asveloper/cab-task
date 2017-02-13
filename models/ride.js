@@ -10,8 +10,8 @@ const rideSchema = new Schema({
   rideId: Schema.Types.ObjectId,
   clientId: Schema.Types.ObjectId,
   driverId: Schema.Types.ObjectId,
-  rideBeginPlace: String,
-  rideEndPlace: String,
+  rideBeginPlace: String, // the departure place we got from client
+  rideEndPlace: String, // the destination we got from client , google geocoding
   rideBeginTime: Date,
   rideEndTime: Date,
   rideBeginLat: Schema.Types.Double,
@@ -19,25 +19,25 @@ const rideSchema = new Schema({
   rideEndLat: Schema.Types.Double,
   rideEndLong: Schema.Types.Double,
   estimatedDistance: Schema.Types.Double,
-  estimatedArrival: Schema.Types.Double,
-  actualDistance: Schema.Types.Double,
-  actualArrival: Schema.Types.Double,
-  staticMapURL: String,
+  estimatedArrival: Schema.Types.Double, // estimated arrival time in minutes
+  actualDistance: Schema.Types.Double, //realised route’s length in kilometers
+  actualArrival: Schema.Types.Double, // actual arrival time in minutes
+  staticMapURL: String,  // url of static map showing the ride
   rideTerminated: Boolean,
   pricePaid: Boolean,
-  cabFare: Schema.Types.Long,
+  cabFare: Schema.Types.Long, // amount to be paid recalculated  after the ride
   cashedAmount: Schema.Types.Long,
   rideRating: Number,
-  rideActions: [{
-    actionType: String,
-    issuedBy: Schema.Types.ObjectId,
-    rideStatus: String,
+  rideActions: [{ {  //array of ride actions
+    actionType: String, // predefined action types
+    issuedBy: Schema.Types.ObjectId, // id of either the driver or the client
+    rideStatus: String, // ride status code – the new status of the ride after the action
     timestamp: {type: Date, default: Date.now}
   }],
-  callDispatching: [{
+  callDispatching: [{ //array of call dispatch results
     driverId : Schema.Types.ObjectId,
-    first: Boolean,
-    response: String,
+    first: Boolean, // true only in case of priority given
+    response: String, // response: ACCEPT, REJECT, TIMED_OUT
     responseTime: Date
   }]
 }, {collection: 'rides', versionKey: false, shardKey: { _id: true } });

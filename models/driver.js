@@ -6,11 +6,11 @@ const
 
 const driverSchema = new Schema({
   driverId: Schema.Types.ObjectId,
-  deviceId: String,
+  deviceId: String, // IMEI of driver’s mobile device
   phoneNumber: String,
-  token: String,
-  driverStatus: String,
-  status: Boolean
+  token: String, // active JWT auth token assigned to driver
+  driverStatus: String, // IDLE, ENROUTE, ONTHEWAY, NOTAVAILABLE
+  active: Boolean // TRUE if we still work with this driver
 }, {collection: 'drivers', versionKey: false, shardKey: { _id: true } });
 
 module.exports = mongoose.model("Driver", driverSchema);
