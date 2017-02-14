@@ -14,10 +14,14 @@ const rideSchema = new Schema({
   rideEndPlace: String, // the destination we got from client , google geocoding
   rideBeginTime: Date,
   rideEndTime: Date,
-  rideBeginLat: Schema.Types.Double,
-  rideBeginLong: Schema.Types.Double,
-  rideEndLat: Schema.Types.Double,
-  rideEndLng: Schema.Types.Double,
+  rideBeginLoc: {
+    type: { type: String },
+    coordinates: [Number]
+  },
+  rideEndLoc: {
+    type: { type: String },
+    coordinates: [Number]
+  },
   estimatedDistance: Schema.Types.Double,
   estimatedArrival: Schema.Types.Double, // estimated arrival time in minutes
   actualDistance: Schema.Types.Double, //realised route’s length in kilometers
@@ -41,5 +45,8 @@ const rideSchema = new Schema({
     responseTime: Date
   }]
 }, {collection: 'rides', versionKey: false, shardKey: { _id: true } });
+
+rideSchema.index({ "rideBeginLoc": "2dsphere" });
+rideSchema.index({ "rideEndLoc": "2dsphere" });
 
 module.exports = mongoose.model("Ride", rideSchema);

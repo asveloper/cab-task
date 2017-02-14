@@ -2,14 +2,17 @@
 
 const
   mongoose = require("mongoose"),
-  Schema = mongoose.Schema,
-  require('mongoose-long')(mongoose);
+  Schema = mongoose.Schema;
 
 const clientLocationSchema = new Schema({
   clientId: Schema.Types.ObjectId,
-  latitude: Schema.Types.Long,
-  longitude: Schema.Types.Long,
+  location: {
+    type: { type: String },
+    coordinates: [Number] // longitude, latitude
+  },
   timeStamp: {type: Date, default: Date.now}
 }, {collection: 'client_locations', versionKey: false, shardKey: { _id: true } });
+
+clientLocationSchema.index({ "location": "2dsphere" });
 
 module.exports = mongoose.model("ClientLocation", clientLocationSchema);

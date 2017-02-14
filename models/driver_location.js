@@ -2,14 +2,17 @@
 
 const
   mongoose = require("mongoose"),
-  Schema = mongoose.Schema,
-  require('mongoose-long')(mongoose);
+  Schema = mongoose.Schema;
 
 const driverLocationSchema = new Schema({
   driverId: Schema.Types.ObjectId,
-  latitude: Schema.Types.Long,
-  longitude: Schema.Types.Long,
+  location: {
+    type: { type: String },
+    coordinates: [Number] // longitude, latitude
+  },
   timeStamp: {type: Date, default: Date.now}
 }, {collection: 'driver_locations', versionKey: false, shardKey: { _id: true } });
+
+driverLocationSchema.index({ "location": "2dsphere" });
 
 module.exports = mongoose.model("DriverLocation", driverLocationSchema);
