@@ -6,6 +6,7 @@ var config = require('config');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+var http = require('http');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -61,5 +62,42 @@ app.use(function(err, req, res, next) {
   });
 });
 
+var server = http.createServer(app);
+server.listen(3000);
+var io = require('socket.io')(server);
+
+// socket connection
+io.on('connection', function (socket) {
+
+  console.log("Socket connected!");
+
+
+  socket.on('call cab', function (data) {
+    console.log("call cab...");
+    console.log(data);
+
+    if (data.clientId) {
+      // TODO: search for nearest drivers and display them the client request
+      socket.broadcast.emit("request ride", {msg: 'ride requested', clientId: data.clientId});
+    }
+
+  });
+
+  socket.on('accept ride', function (data) {
+    console.log("accept ride...");
+    console.log(data);
+
+    if (data.driverId && data.clientId) {
+      // TODO: Save data in db
+      socket.broadcast.emit("on its way", {msg: 'driver is on its way', clientId: data.clientId});
+    }
+
+  });
+
+  socket.on('disconnect', function () {
+    console.log("disconnected");
+  });
+
+});
 
 module.exports = app;

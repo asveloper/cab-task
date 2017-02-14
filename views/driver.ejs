@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Driver panel</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+
+    <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+    <script>
+      var socket = io.connect('http://localhost:3000');
+
+      socket.on('request ride', function (data) {
+        console.log("on request ride....");
+        console.log(data);
+
+        if (data.clientId) {
+          // TODO: when a ride is requested then send driver will accept it and we will emit the new message
+          socket.emit('accept ride', { msg: 'ride accepted', driverId: "driver_id_here", clientId: data.clientId });
+        }
+      });
+
+    </script>
+
+  </head>
+  <body>
+    <h1>Driver</h1>
+    <p>Welcome to driver panel</p>
+  </body>
+</html>
