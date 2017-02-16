@@ -10,8 +10,7 @@ const userSchema = new Schema({
   deviceId: String, // IMEI of client’s mobile device
   phoneNumber: {type: String, required: true},
   token: String, // active JWT auth token assigned to client
-  status: String, // IDLE, ENROUTE, ONTHEWAY, NOTAVAILABLE
-  isActive: Boolean // TRUE if we still work with this driver
+  active: Boolean // TRUE if we still work with this driver
 }, {collection: 'users', versionKey: false, shardKey: { _id: true } });
 
 module.exports = mongoose.model("User", userSchema);
