@@ -98,6 +98,19 @@ io.on('connection', function (socket) {
     console.log("Connected!");
   });
 
+
+  // authenticate events
+  jwt.verify(socket.handshake.query.token, config.get('secret'), function(err, decoded) {
+    if (err) {
+      console.log("Authentication error");
+      return;
+    } else {
+      console.log("Authenticated!");
+      return;
+    }
+  });
+
+
   socket.on('call cab', function (data) {
     console.log("call cab...");
     console.log(data);
