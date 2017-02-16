@@ -74,7 +74,7 @@ var io = require('socket.io')(server);
 io.use(function(socket, next){
     // console.log("Query: ", socket.handshake.query);
     // return the result of next() to accept the connection.
-    if (socket.handshake.query.token.length) {
+    if (socket.handshake.query.token) {
       jwt.verify(socket.handshake.query.token, config.get('secret'), function(err, decoded) {
         if (err) {
           console.log("Authentication error");
