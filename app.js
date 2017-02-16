@@ -41,7 +41,7 @@ app.use(function(req, res, next) {
 });
 
 // generate token on server startup
-require("./src/generate_token");
+require("./src/seeds");
 
 // error handlers
 
