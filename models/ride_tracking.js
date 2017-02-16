@@ -7,7 +7,7 @@ const
 
 // Collected GPS tracking data during the ride
 const rideTrackingSchema = new Schema({
-  driverId: Schema.Types.ObjectId,
+  rideId: Schema.Types.ObjectId,
   location: {
     type: { type: String },
     coordinates: [Number] // longitude, latitude
