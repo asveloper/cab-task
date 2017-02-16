@@ -32,14 +32,14 @@ const rideSchema = new Schema({
   cabFare: Schema.Types.Long, // amount to be paid recalculated  after the ride
   cashedAmount: Schema.Types.Long,
   rideRating: Number,
+  rideStatus: String, // ride status code – the new status of the ride after the action
   rideActions: [{ {  //array of ride actions
     actionType: String, // predefined action types
     issuedBy: Schema.Types.ObjectId, // id of either the driver or the client
-    rideStatus: String, // ride status code – the new status of the ride after the action
     timestamp: {type: Date, default: Date.now}
   }],
   callDispatching: [{ //array of call dispatch results
-    driverId : Schema.Types.ObjectId,
+    userId : Schema.Types.ObjectId,
     first: Boolean, // true only in case of priority given
     response: String, // response: ACCEPT, REJECT, TIMED_OUT
     responseTime: Date
