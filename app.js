@@ -71,27 +71,31 @@ var server = http.createServer(app);
 server.listen(3000);
 var io = require('socket.io')(server);
 
-// socket connection
-io.on('connection', function (socket) {
-
-  console.log("Socket connected!");
-
-  // authenticate sockets
-  User.findOne((err, user) => {
-    if (err) {
-      console.log(err);
-      return;
-    } else {
-      jwt.verify(user.jwtAccessToken, config.get('secret'), function(err, decoded) {
+io.use(function(socket, next){
+    // console.log("Query: ", socket.handshake.query);
+    // return the result of next() to accept the connection.
+    if (socket.handshake.query.token.length) {
+      jwt.verify(socket.handshake.query.token, config.get('secret'), function(err, decoded) {
         if (err) {
-          console.log(err);
-          socket.emit("failed", {msg: 'Authentication failed!', reason: decoded});
-          return;
+          console.log("Authentication error");
+          next(new Error('Authentication error'));
         } else {
           console.log("Authenticated!");
+          return next();
         }
       });
     }
+
+    // call next() with an Error if you need to reject the connection.
+    next(new Error('Authentication error'));
+});
+
+
+// socket connection
+io.on('connection', function (socket) {
+
+  socket.on('connect', function () {
+    console.log("Connected!");
   });
 
   socket.on('call cab', function (data) {

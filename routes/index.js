@@ -1,16 +1,12 @@
 var express = require('express');
 var router = express.Router();
-var User = require("../models/user");
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  User.findOne((err, user) => {
-    if (err) {
-      console.log(err);
-    } else {
-      res.render('index', { title: 'Express', token: user.token });
-    }
-  })
+  // res.render('index', { title: 'Cab' });
+  var socket = require('socket.io-client')('http://localhost:3000', {query: "token="+req.query.token});
+  socket.emit("call cab");
+  res.sendStatus(200);
 });
 
 router.get('/driver', function(req, res, next) {
