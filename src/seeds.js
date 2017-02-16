@@ -48,7 +48,7 @@ User.findOneAndUpdate({
   email: "driver2@abc.com",
   password: "password",
   jwtAccessToken:  jwt.sign(new Date(), config.get('secret')),
-  userType: "rider"
+  userType: "driver"
 }, {upsert: true, 'new': true}, function(err, res) {
     if (err) console.log(err);
 });
