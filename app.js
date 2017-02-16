@@ -71,6 +71,7 @@ var server = http.createServer(app);
 server.listen(3000);
 var io = require('socket.io')(server);
 
+// authenticate request
 io.use(function(socket, next){
     // console.log("Query: ", socket.handshake.query);
     // return the result of next() to accept the connection.
