@@ -12,9 +12,9 @@
         console.log("on request ride....");
         console.log(data);
 
-        if (data.token && data.clientId) {
+        if (data.clientId) {
           // TODO: when a ride is requested then send driver will accept it and we will emit the new message
-          socket.emit('accept ride', { msg: 'ride accepted', driverId: "driver_id_here", token: data.token, clientId: data.clientId });
+          socket.emit('accept ride', { msg: 'ride accepted', driverId: "driver_id_here", clientId: data.clientId });
         }
       });
 

@@ -8,7 +8,7 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var http = require('http');
 var User = require("./models/user");
-
+var jwt    = require('jsonwebtoken');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -76,18 +76,30 @@ io.on('connection', function (socket) {
 
   console.log("Socket connected!");
 
+  // authenticate sockets
+  User.findOne((err, user) => {
+    if (err) {
+      console.log(err);
+      return;
+    } else {
+      jwt.verify(user.jwtAccessToken, config.get('secret'), function(err, decoded) {
+        if (err) {
+          console.log(err);
+          socket.emit("failed", {msg: 'Authentication failed!', reason: decoded});
+          return;
+        } else {
+          console.log("Authenticated!");
+        }
+      });
+    }
+  });
+
   socket.on('call cab', function (data) {
     console.log("call cab...");
     console.log(data);
 
-    User.findOne((err, user) => {
-      if (err) {
-        console.log(err);
-      } else {
-      // Broadcast to all drivers
-        socket.broadcast.emit("request ride", {msg: 'ride requested', token: user.jwtAccessToken, clientId: socket.id});
-      }
-    });
+    // Broadcast to all drivers
+    socket.broadcast.emit("request ride", {msg: 'ride requested', clientId: socket.id});
 
   });
 
@@ -95,8 +107,7 @@ io.on('connection', function (socket) {
     console.log("accept ride...");
     console.log(data);
 
-    if (data.driverId && data.clientId && data.token) {
-      // TODO: Save data in db
+    if (data.driverId && data.clientId) {
       io.to(data.clientId).emit("on its way", {msg: 'driver is on its way', clientId: data.clientId});
     }
 
