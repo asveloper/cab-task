@@ -40,6 +40,9 @@ app.use(function(req, res, next) {
   next(err);
 });
 
+// generate token on server startup
+require("./src/generate_token");
+
 // error handlers
 
 // development error handler
