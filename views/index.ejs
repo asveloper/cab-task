@@ -11,7 +11,7 @@
       var callCab = confirm("Do you want to call cab?");
 
       if (callCab) {
-        socket.emit('call cab', { clientId: 'client_id_here' });
+        socket.emit('call cab', {msg: "client called the cab"});
       }
 
       socket.on('on its way', function (data) {
