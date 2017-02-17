@@ -16,7 +16,9 @@ var users = require('./routes/users');
 var app = express();
 
 // connect to DB
-mongoose.connect(config.get("MONGO_URL"));
+mongoose.connect(config.get("MONGO_URL"), function(err) {
+    if (err) throw err;
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
