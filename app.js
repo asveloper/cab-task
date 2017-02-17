@@ -75,9 +75,8 @@ var io = require('socket.io')(server);
 
 // authenticate request
 io.use(function(socket, next){
-    // console.log("Query: ", socket.handshake.query);
     // return the result of next() to accept the connection.
-    if (socket.handshake.query.token) {
+    if (socket.handshake.query.token != 'undefined') {
       jwt.verify(socket.handshake.query.token, config.get('secret'), function(err, decoded) {
         if (err) {
           console.log("Authentication error");
@@ -87,6 +86,9 @@ io.use(function(socket, next){
           return next();
         }
       });
+    } else {
+      console.log("No token provided!");
+       next(new Error('No token provided!'));
     }
 
     // call next() with an Error if you need to reject the connection.
@@ -96,11 +98,6 @@ io.use(function(socket, next){
 
 // socket connection
 io.on('connection', function (socket) {
-
-  socket.on('connect', function () {
-    console.log("Connected!");
-  });
-
 
   // authenticate events
   jwt.verify(socket.handshake.query.token, config.get('secret'), function(err, decoded) {
